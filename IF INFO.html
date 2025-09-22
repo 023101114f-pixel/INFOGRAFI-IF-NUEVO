@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía - Comparativa de SGBD Relacionales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a3f8f, #4a5fcf);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a2a6c, #2a3f8f);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 10s infinite linear;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .metadata {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background: linear-gradient(90deg, #4a5fcf, #2a3f8f);
+            padding: 20px;
+            font-size: 0.9rem;
+            color: white;
+            position: relative;
+        }
+        
+        .metadata-item {
+            margin: 8px 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .metadata-item i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px dashed #e9ecef;
+            position: relative;
+        }
+        
+        h2 {
+            color: #1a2a6c;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2a3f8f;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2 i {
+            margin-right: 15px;
+            background: linear-gradient(135deg, #1a2a6c, #2a3f8f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #2a3f8f;
+            margin: 25px 0 15px;
+            padding-left: 15px;
+            border-left: 5px solid #2a3f8f;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3 i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+        
+        .db-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .db-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid;
+        }
+        
+        .db-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .db-card.sql-server {
+            border-top-color: #0078d4;
+        }
+        
+        .db-card.mysql {
+            border-top-color: #00758f;
+        }
+        
+        .db-card.oracle {
+            border-top-color: #f80000;
+        }
+        
+        .db-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .db-header.sql-server {
+            background: linear-gradient(135deg, #0078d4, #106ebe);
+        }
+        
+        .db-header.mysql {
+            background: linear-gradient(135deg, #00758f, #005c70);
+        }
+        
+        .db-header.oracle {
+            background: linear-gradient(135deg, #f80000, #c60000);
+        }
+        
+        .db-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .db-body {
+            padding: 25px;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+        }
+        
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2a3f8f;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #2a3f8f, #1a2a6c);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover td {
+            background-color: #e9ecef;
+        }
+        
+        .aspect-cell {
+            font-weight: 600;
+            color: #1a2a6c;
+        }
+        
+        .conclusion-section {
+            background: linear-gradient(135deg, #f0f4ff, #e1e8ff);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+            border-left: 5px solid #2a3f8f;
+            position: relative;
+        }
+        
+        .conclusion-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%232a3f8f" stroke-width="2"/></svg>');
+            background-size: 50px;
+        }
+        
+        .recommendations {
+            margin-top: 50px;
+        }
+        
+        .recommendation-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #2a3f8f;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: flex-start;
+            transition: transform 0.2s;
+        }
+        
+        .recommendation-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .rec-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: #2a3f8f;
+            flex-shrink: 0;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #1a2a6c, #0d1a4d);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #4a5fcf;
+        }
+        
+        @media (max-width: 768px) {
+            .metadata {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .db-cards {
+                flex-direction: column;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 5px 5px 0;
+        }
+        
+        .tag.sql-server {
+            background: #e3f2fd;
+            color: #0078d4;
+        }
+        
+        .tag.mysql {
+            background: #e8f5e9;
+            color: #00758f;
+        }
+        
+        .tag.oracle {
+            background: #ffebee;
+            color: #f80000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-database"></i> COMPARATIVA DE SGBD RELACIONALES</h1>
+            <p class="subtitle">Análisis detallado de SQL Server, MySQL y Oracle Database</p>
+        </header>
+        
+        <div class="metadata">
+            <div class="metadata-item"><i class="fas fa-book"></i> <strong>Asignatura:</strong> Modelado de Base de Datos</div>
+            <div class="metadata-item"><i class="fas fa-user-graduate"></i> <strong>Docente:</strong> Ing. Hugo Espetia Huamanga</div>
+            <div class="metadata-item"><i class="fas fa-user"></i> <strong>Alumna:</strong> Karin Rubina Quispe Champi</div>
+            <div class="metadata-item"><i class="fas fa-graduation-cap"></i> <strong>Ciclo:</strong> VI</div>
+            <div class="metadata-item"><i class="fas fa-calendar-alt"></i> <strong>Año:</strong> 2025</div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2><i class="fas fa-info-circle"></i> Introducción</h2>
+                <p>Este documento presenta un análisis comparativo de tres Sistemas de Gestión de Bases de Datos (SGBD) relacionales ampliamente utilizados: <span class="highlight">SQL Server de Microsoft</span>, <span class="highlight">MySQL</span> (actualmente propiedad de Oracle) y <span class="highlight">Oracle Database</span>. Cada uno tiene características, fortalezas y casos de uso específicos que los hacen adecuados para diferentes escenarios empresariales y técnicos.</p>
+                <p>La elección del SGBD adecuado es crucial para el éxito de cualquier proyecto, ya que impacta directamente en el rendimiento, seguridad, escalabilidad y costos del sistema.</p>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-server"></i> Sistemas de Gestión de Bases de Datos Analizados</h2>
+                
+                <div class="db-cards">
+                    <div class="db-card sql-server">
+                        <div class="db-header sql-server">
+                            <div class="db-icon"><i class="fab fa-microsoft"></i></div>
+                            <h3>SQL Server</h3>
+                        </div>
+                        <div class="db-body">
+                            <h3><i class="fas fa-archway"></i> Arquitectura</h3>
+                            <p>Microsoft SQL Server se organiza en dos componentes principales: el <span class="highlight">Relational Engine</span>, encargado del procesamiento de consultas, y el <span class="highlight">Storage Engine</span>, que gestiona las páginas de datos, el buffer pool y el transaction log.</p>
+                            
+                            <h3><i class="fas fa-shield-alt"></i> Seguridad</h3>
+                            <p>Implementa <span class="highlight">Transparent Data Encryption (TDE)</span> para cifrado en reposo y <span class="highlight">Always Encrypted</span> para cifrado del lado cliente con enclaves seguros.</p>
+                            
+                            <h3><i class="fas fa-tags"></i> Licenciamiento</h3>
+                            <p>Dos esquemas: por núcleo (core-based) y por servidor + CAL (Client Access License), con ediciones Enterprise, Standard, Developer y Express.</p>
+                            
+                            <div class="tags">
+                                <span class="tag sql-server">OLTP/OLAP</span>
+                                <span class="tag sql-server">Azure Integration</span>
+                                <span class="tag sql-server">Empresarial</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="db-card mysql">
+                        <div class="db-header mysql">
+                            <div class="db-icon"><i class="fas fa-database"></i></div>
+                            <h3>MySQL</h3>
+                        </div>
+                        <div class="db-body">
+                            <h3><i class="fas fa-archway"></i> Arquitectura</h3>
+                            <p>Diseño modular que soporta múltiples storage engines. El motor por defecto es <span class="highlight">InnoDB</span>, que garantiza transacciones ACID. <span class="highlight">MySQL HeatWave</span> integra OLTP y OLAP en memoria.</p>
+                            
+                            <h3><i class="fas fa-chart-line"></i> Escalabilidad</h3>
+                            <p>Ofrece replicación asíncrona y semisíncrona, Group Replication y MySQL Cluster para alta disponibilidad. HeatWave mejora el procesamiento analítico.</p>
+                            
+                            <h3><i class="fas fa-tags"></i> Licenciamiento</h3>
+                            <p><span class="highlight">Community Edition</span> (gratuita, GPL) y ediciones comerciales (Enterprise, Cluster CGE) con soporte y herramientas avanzadas.</p>
+                            
+                            <div class="tags">
+                                <span class="tag mysql">Web Apps</span>
+                                <span class="tag mysql">Startups</span>
+                                <span class="tag mysql">Bajo Costo</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="db-card oracle">
+                        <div class="db-header oracle">
+                            <div class="db-icon"><i class="fas fa-building"></i></div>
+                            <h3>Oracle Database</h3>
+                        </div>
+                        <div class="db-body">
+                            <h3><i class="fas fa-archway"></i> Arquitectura</h3>
+                            <p>Arquitectura cliente-servidor con modelo <span class="highlight">multitenant</span> (Container Databases que alojan Pluggable Databases). <span class="highlight">Real Application Clusters (RAC)</span> para escalabilidad horizontal.</p>
+                            
+                            <h3><i class="fas fa-cogs"></i> Características Avanzadas</h3>
+                            <p><span class="highlight">Data Guard</span> y <span class="highlight">Active Data Guard</span> para replicación y recuperación ante desastres. <span class="highlight">Automatic Storage Management (ASM)</span> y RMAN para backup avanzado.</p>
+                            
+                            <h3><i class="fas fa-tags"></i> Licenciamiento</h3>
+                            <p>Complejo: ediciones Enterprise, Standard, SE2 y Express. Muchas características requieren licencias adicionales, elevando el costo total.</p>
+                            
+                            <div class="tags">
+                                <span class="tag oracle">Grandes Corporaciones</span>
+                                <span class="tag oracle">Sistemas Críticos</span>
+                                <span class="tag oracle">Alta Seguridad</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-table"></i> Tabla Comparativa</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>SQL Server</th>
+                            <th>MySQL</th>
+                            <th>Oracle DB</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="aspect-cell"><strong>Rendimiento</strong></td>
+                            <td>Buen desempeño en OLTP/OLAP, alta disponibilidad en Azure.</td>
+                            <td>Rápido con InnoDB, ideal para apps web; HeatWave mejora analítica.</td>
+                            <td>Muy alto rendimiento, escalabilidad con RAC y multitenant.</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-cell"><strong>Seguridad</strong></td>
+                            <td>Cifrado TDE, Always Encrypted, auditoría integrada.</td>
+                            <td>Seguridad básica en Community, avanzada en Enterprise.</td>
+                            <td>Seguridad robusta: cifrado, auditoría, Data Guard.</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-cell"><strong>Costo</strong></td>
+                            <td>Gratis en Express/Developer; Enterprise costoso.</td>
+                            <td>Community gratuita; Enterprise y HeatWave de pago.</td>
+                            <td>Muy costoso en Enterprise; licenciamiento complejo.</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-cell"><strong>Facilidad de uso</strong></td>
+                            <td>Intuitivo en entorno Microsoft; curva media.</td>
+                            <td>Fácil inicio, herramientas simples (Workbench).</td>
+                            <td>Complejo, curva alta, requiere experiencia.</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-cell"><strong>Comunidad/Soporte</strong></td>
+                            <td>Amplia comunidad y soporte oficial Microsoft.</td>
+                            <td>Gran comunidad open-source; soporte Oracle en pago.</td>
+                            <td>Fuerte soporte corporativo y documentación.</td>
+                        </tr>
+                        <tr>
+                            <td class="aspect-cell"><strong>Casos de uso</strong></td>
+                            <td>Empresas con ecosistema Microsoft, ERP, BI.</td>
+                            <td>Apps web, startups, proyectos de bajo costo.</td>
+                            <td>Grandes corporaciones, sistemas críticos y financieros.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="conclusion-section">
+                <h2><i class="fas fa-check-circle"></i> Conclusiones</h2>
+                <p>Tras analizar SQL Server, MySQL y Oracle, considero que cada SGBD tiene un enfoque muy marcado: <span class="highlight">SQL Server</span> destaca en integración con entornos Microsoft y soluciones empresariales medianas; <span class="highlight">MySQL</span> es más práctico para proyectos con bajo costo inicial y orientados a la web; mientras que <span class="highlight">Oracle</span> ofrece el mayor nivel de seguridad y escalabilidad, aunque con un costo significativamente más alto.</p>
+                <p>Para un proyecto nuevo, la elección dependería de las prioridades: si se busca bajo costo y facilidad de inicio, MySQL es recomendable; si el entorno ya está basado en Microsoft, SQL Server resulta más eficiente; y si el objetivo es manejar grandes volúmenes de datos críticos en una empresa de gran escala, Oracle es la mejor alternativa.</p>
+            </div>
+            
+            <div class="recommendations">
+                <h2><i class="fas fa-lightbulb"></i> Recomendaciones</h2>
+                
+                <div class="recommendation-item">
+                    <div class="rec-icon"><i class="fas fa-globe"></i></div>
+                    <div>
+                        <strong>Para aplicaciones web o startups con presupuesto limitado:</strong> MySQL resulta la mejor opción, gracias a su comunidad activa, facilidad de uso y bajo costo inicial en su edición Community.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <div class="rec-icon"><i class="fab fa-microsoft"></i></div>
+                    <div>
+                        <strong>Para organizaciones que ya trabajan con tecnologías Microsoft:</strong> La elección más eficiente sería SQL Server, por su buena combinación entre rendimiento, seguridad y facilidad de administración.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <div class="rec-icon"><i class="fas fa-building"></i></div>
+                    <div>
+                        <strong>Para proyectos de gran escala con altos requisitos de disponibilidad y seguridad:</strong> La recomendación es optar por Oracle Database, aun considerando su alto costo de licenciamiento.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <div class="rec-icon"><i class="fas fa-balance-scale"></i></div>
+                    <div>
+                        <strong>Consideración general:</strong> La elección del SGBD no debe limitarse al costo, sino que debe valorarse también la proyección de crecimiento, el nivel de soporte requerido y las capacidades técnicas del equipo que lo administra.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo"><i class="fas fa-university"></i></div>
+                    <p>Universidad Andina del Cusco</p>
+                    <p>Facultad de Ingeniería y Arquitectura</p>
+                    <p>Escuela Profesional de Ingeniería de Sistemas</p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-user-graduate"></i> Karin Rubina Quispe Champi</p>
+                    <p><i class="fas fa-calendar-alt"></i> 2025</p>
+                    <p><i class="fas fa-database"></i> Modelado de Base de Datos</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">© 2025 - Todos los derechos reservados</p>
+        </footer>
+    </div>
+</body>
+</html>
